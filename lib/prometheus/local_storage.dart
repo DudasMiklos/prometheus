@@ -13,13 +13,28 @@ class LocalStorage {
       PrometheusLocalization.setSelectedLanguageLocale = Locale(lang);
     } else {
       lang = Platform.localeName.substring(0, 2);
-      await presistLang(lang);
+      await presistLanguage(lang);
       PrometheusLocalization.setSelectedLanguageLocale = Locale(lang);
     }
   }
 
-  static Future<void> presistLang(String lang) async {
+  static Future<void> presistLanguage(String lang) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString("prometheusLang", lang);
+    sharedPreferences.setString("prometheusLanguage", lang);
+  }
+
+  static Future<String?> loadLanguageVersion() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Object? value = sharedPreferences.get("prometheusLanguageVersion");
+    String? langVersion;
+    if (value != null) {
+      langVersion = (value as String);
+    }
+    return langVersion;
+  }
+
+  static Future<void> presistLanguageVersion(String langVersion) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("prometheusLanguageVersion", langVersion);
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/services.dart';
@@ -22,13 +23,17 @@ class FileStorage {
       //if it doesnt exists, read the default asset file, save it locally and convert it into map, return the value
       String jsonAsString =
           await rootBundle.loadString("lang/${locale.languageCode}.json");
-      //TODO SAVE TRANS VERSION
+
       //TODOCHECHK FOR UPDATE
       //TODOREFRESH IF UPDATE AVAILABLE
       File file =
-          File('${baseDirectory.path}/lang/${locale.languageCode}.json');
+          await File('${baseDirectory.path}/lang/${locale.languageCode}.json')
+              .create(recursive: true); //try cach to add
       file.writeAsString(jsonAsString);
-      return _convertStringToJson(jsonAsString);
+      Map<String, String> convertedJson = _convertStringToJson(jsonAsString);
+      print(convertedJson["version"]); //TO BE USED
+      //TODO IF VERSION IS SMALLER REPLACE IT WITH THAT
+      return convertedJson;
     }
   }
 

@@ -25,7 +25,7 @@ class PrometheusLocalization {
   }
 
   static set setSelectedLanguageLocale(Locale newLocale) {
-    LocalStorage.presistLang(newLocale.languageCode.toLowerCase());
+    LocalStorage.presistLanguage(newLocale.languageCode.toLowerCase());
     _selectedLocale = newLocale;
   }
 

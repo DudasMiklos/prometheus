@@ -1,10 +1,9 @@
 library prometheus;
 
-import 'dart:convert';
 import 'dart:core';
 import 'package:prometheus/prometheus/delegate.dart';
+import 'package:prometheus/prometheus/file_storage.dart';
 import 'package:prometheus/prometheus/local_storage.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class PrometheusLocalization {
@@ -45,15 +44,8 @@ class PrometheusLocalization {
   static Map<String, String>? _localizedStrings;
 
   Future<bool> load() async {
-    String jsonString =
-        await rootBundle.loadString("lang/${locale!.languageCode}.json");
-
-    Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
-
+    _localizedStrings =
+        await FileStorage.loadLanguage(locale ?? const Locale('hu'));
     return true;
   }
 

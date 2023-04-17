@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalStorage {
   static Future<void> loadLanguage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Object? value = sharedPreferences.get("azgardLangTest3");
+    Object? value = sharedPreferences.get("prometheusLang");
     String? lang;
     if (value != null) {
       lang = (value as String);
@@ -20,6 +20,6 @@ class LocalStorage {
 
   static Future<void> presistLang(String lang) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString("azgardLangTest3", lang);
+    sharedPreferences.setString("prometheusLang", lang);
   }
 }

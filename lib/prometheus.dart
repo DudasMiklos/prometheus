@@ -7,18 +7,18 @@ import 'package:prometheus/prometheus/local_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-class PrometheusLocalizations {
+class PrometheusLocalization {
   static late Locale? _selectedLocale;
   Locale? locale;
 
-  PrometheusLocalizations(this.locale);
+  PrometheusLocalization(this.locale);
 
-  static const LocalizationsDelegate<PrometheusLocalizations> delegate =
-      PrometheusLocalizationsDelegate();
+  static const LocalizationsDelegate<PrometheusLocalization> delegate =
+      PrometheusLocalizationDelegate();
 
-  static PrometheusLocalizations? of(BuildContext context) {
-    return Localizations.of<PrometheusLocalizations>(
-        context, PrometheusLocalizations);
+  static PrometheusLocalization? of(BuildContext context) {
+    return Localizations.of<PrometheusLocalization>(
+        context, PrometheusLocalization);
   }
 
   static Locale? get getSelectedLanguageLocale {

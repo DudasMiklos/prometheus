@@ -2,9 +2,9 @@ import 'dart:core';
 import 'package:flutter/widgets.dart';
 import 'package:prometheus/prometheus.dart';
 
-class PrometheusLocalizationsDelegate
-    extends LocalizationsDelegate<PrometheusLocalizations> {
-  const PrometheusLocalizationsDelegate();
+class PrometheusLocalizationDelegate
+    extends LocalizationsDelegate<PrometheusLocalization> {
+  const PrometheusLocalizationDelegate();
 
   @override
   bool isSupported(Locale locale) {
@@ -12,8 +12,8 @@ class PrometheusLocalizationsDelegate
   }
 
   @override
-  Future<PrometheusLocalizations> load(Locale locale) async {
-    PrometheusLocalizations localizations = PrometheusLocalizations(locale);
+  Future<PrometheusLocalization> load(Locale locale) async {
+    PrometheusLocalization localizations = PrometheusLocalization(locale);
 
     await localizations.load();
 
@@ -21,7 +21,7 @@ class PrometheusLocalizationsDelegate
   }
 
   @override
-  bool shouldReload(LocalizationsDelegate<PrometheusLocalizations> old) {
+  bool shouldReload(LocalizationsDelegate<PrometheusLocalization> old) {
     return false;
   }
 }

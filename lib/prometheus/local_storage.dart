@@ -10,11 +10,11 @@ class LocalStorage {
     String? lang;
     if (value != null) {
       lang = (value as String);
-      PrometheusLocalizations.setSelectedLanguageLocale = Locale(lang);
+      PrometheusLocalization.setSelectedLanguageLocale = Locale(lang);
     } else {
       lang = Platform.localeName.substring(0, 2);
       await presistLang(lang);
-      PrometheusLocalizations.setSelectedLanguageLocale = Locale(lang);
+      PrometheusLocalization.setSelectedLanguageLocale = Locale(lang);
     }
   }
 

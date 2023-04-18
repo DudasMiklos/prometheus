@@ -1,14 +1,24 @@
 library prometheus;
 
+import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
+import 'package:prometheus/prometheus/api.dart';
 import 'package:prometheus/prometheus/delegate.dart';
 import 'package:prometheus/prometheus/file_storage.dart';
 import 'package:prometheus/prometheus/local_storage.dart';
 import 'package:flutter/widgets.dart';
+import 'package:prometheus/prometheus/utils.dart';
 
 class PrometheusLocalization {
   static late Locale? _selectedLocale;
-  Locale? locale;
+  Locale locale = const Locale('hu');
+
+  static late String _hostname;
+  static late String _versionPath;
+  static late String _translationsPath;
+
+  static late List<Locale> _supportedLocales;
 
   PrometheusLocalization(this.locale);
 
@@ -24,28 +34,64 @@ class PrometheusLocalization {
     return _selectedLocale;
   }
 
+  static String? get getSelectedLanguageCode {
+    return _selectedLocale?.languageCode.toLowerCase();
+  }
+
   static set setSelectedLanguageLocale(Locale newLocale) {
     LocalStorage.presistLanguage(newLocale.languageCode.toLowerCase());
     _selectedLocale = newLocale;
   }
 
-  static String? get getSelectedLanguageCode {
-    return _selectedLocale?.languageCode.toLowerCase();
+  static String get getHostname {
+    return _hostname;
+  }
+
+  static String get getTranslationsPath {
+    return _translationsPath;
+  }
+
+  static String get getVersionPath {
+    return _versionPath;
+  }
+
+  static List<Locale> get getSupportedLocales {
+    return _supportedLocales;
   }
 
   static bool isLanguageActice(String languageCode) {
     return getSelectedLanguageCode == languageCode;
   }
 
-  static Future<void> init() async {
+  //supportedLanguages defaults to hu only
+  static Future<void> init({
+    required String hostname,
+    required String versionPath,
+    required String translationsPath,
+    List<Locale> supportedLocales = const [Locale('hu')],
+  }) async {
+    _hostname = hostname;
+    _versionPath = versionPath;
+    _translationsPath = translationsPath;
+    _supportedLocales = supportedLocales;
     await LocalStorage.loadLanguage();
+    final bool isNewVersionAvailable = await Utils.isNewVersionAvailable();
+    if (isNewVersionAvailable) {
+      Map<String, dynamic> magick = await Api.fetchTranslations();
+      for (var locale in supportedLocales) {
+        log(locale.languageCode);
+        log(magick["data"][locale.languageCode].toString());
+        FileStorage.saveLanguage(
+            locale, jsonEncode(magick["data"][locale.languageCode]));
+      }
+    }
+    LocalStorage.presistLanguageVersion(Utils.getTranslationVersion);
   }
 
   static Map<String, String>? _localizedStrings;
 
   Future<bool> load() async {
-    _localizedStrings =
-        await FileStorage.loadLanguage(locale ?? const Locale('hu'));
+    _localizedStrings = await FileStorage.loadLanguage(locale);
     return true;
   }
 

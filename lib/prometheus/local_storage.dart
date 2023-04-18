@@ -23,11 +23,14 @@ class LocalStorage {
     sharedPreferences.setString("prometheusLanguage", lang);
   }
 
-  static Future<String?> loadLanguageVersion() async {
+  static Future<String> loadLanguageVersion() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Object? value = sharedPreferences.get("prometheusLanguageVersion");
     String? langVersion;
-    if (value != null) {
+    if (value == null) {
+      langVersion = "0.0.1";
+      presistLanguageVersion(langVersion);
+    } else {
       langVersion = (value as String);
     }
     return langVersion;

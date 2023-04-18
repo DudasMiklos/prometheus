@@ -37,6 +37,24 @@ class FileStorage {
     }
   }
 
+  static Future<void> saveLanguage(Locale locale, String jsonAsString) async {
+    final Directory baseDirectory = await getApplicationDocumentsDirectory();
+
+    bool fileExists =
+        await File('${baseDirectory.path}/lang/${locale.languageCode}.json')
+            .exists();
+    if (fileExists) {
+      File file =
+          File('${baseDirectory.path}/lang/${locale.languageCode}.json');
+      file.writeAsString(jsonAsString);
+    } else {
+      File file =
+          await File('${baseDirectory.path}/lang/${locale.languageCode}.json')
+              .create(recursive: true); //try cach to add
+      file.writeAsString(jsonAsString);
+    }
+  }
+
   static Map<String, String> _convertStringToJson(String jsonAsString) {
     Map<String, String>? jsonStrings;
 

@@ -86,8 +86,6 @@ class PrometheusLocalization {
     if (isNewVersionAvailable) {
       Map<String, dynamic> magick = await Api.fetchTranslations();
       for (var locale in supportedLocales) {
-        log(locale.languageCode);
-        log(magick["data"][locale.languageCode].toString());
         FileStorage.saveLanguage(
             locale, jsonEncode(magick["data"][locale.languageCode]));
       }

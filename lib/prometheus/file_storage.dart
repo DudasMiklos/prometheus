@@ -31,8 +31,6 @@ class FileStorage {
               .create(recursive: true); //try cach to add
       file.writeAsString(jsonAsString);
       Map<String, String> convertedJson = _convertStringToJson(jsonAsString);
-      print(convertedJson["version"]); //TO BE USED
-      //TODO IF VERSION IS SMALLER REPLACE IT WITH THAT
       return convertedJson;
     }
   }

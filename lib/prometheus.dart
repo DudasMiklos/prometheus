@@ -19,6 +19,7 @@ class PrometheusLocalization {
   static late String _translationsPath;
 
   static late List<Locale> _supportedLocales;
+  static late Map<String, String>? _apiHeaders;
 
   PrometheusLocalization(this.locale);
 
@@ -59,6 +60,10 @@ class PrometheusLocalization {
     return _supportedLocales;
   }
 
+  static Map<String, String>? get getApiHeaders {
+    return _apiHeaders;
+  }
+
   static bool isLanguageActice(String languageCode) {
     return getSelectedLanguageCode == languageCode;
   }
@@ -69,11 +74,13 @@ class PrometheusLocalization {
     required String versionPath,
     required String translationsPath,
     List<Locale> supportedLocales = const [Locale('hu')],
+    Map<String, String>? apiHeaders,
   }) async {
     _hostname = hostname;
     _versionPath = versionPath;
     _translationsPath = translationsPath;
     _supportedLocales = supportedLocales;
+    _apiHeaders = apiHeaders;
     await LocalStorage.loadLanguage();
     final bool isNewVersionAvailable = await Utils.isNewVersionAvailable();
     if (isNewVersionAvailable) {

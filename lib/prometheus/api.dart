@@ -4,9 +4,11 @@ import 'package:prometheus/prometheus.dart';
 
 class Api {
   static Future<Map<String, dynamic>> fetchTranslationVersion() async {
-    final response = await http.get(Uri.parse(
-        PrometheusLocalization.getHostname +
-            PrometheusLocalization.getVersionPath));
+    final response = await http.get(
+      Uri.parse(PrometheusLocalization.getHostname +
+          PrometheusLocalization.getVersionPath),
+      headers: PrometheusLocalization.getApiHeaders,
+    );
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -16,9 +18,11 @@ class Api {
   }
 
   static Future<Map<String, dynamic>> fetchTranslations() async {
-    final response = await http.get(Uri.parse(
-        PrometheusLocalization.getHostname +
-            PrometheusLocalization.getTranslationsPath));
+    final response = await http.get(
+      Uri.parse(PrometheusLocalization.getHostname +
+          PrometheusLocalization.getTranslationsPath),
+      headers: PrometheusLocalization.getApiHeaders,
+    );
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

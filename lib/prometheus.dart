@@ -2,12 +2,11 @@ library prometheus;
 
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
+import 'package:flutter/widgets.dart';
 import 'package:prometheus/prometheus/api.dart';
 import 'package:prometheus/prometheus/delegate.dart';
 import 'package:prometheus/prometheus/file_storage.dart';
 import 'package:prometheus/prometheus/local_storage.dart';
-import 'package:flutter/widgets.dart';
 import 'package:prometheus/prometheus/utils.dart';
 
 class PrometheusLocalization {
